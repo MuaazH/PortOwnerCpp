@@ -134,16 +134,17 @@ int GetTcp4Ports(void *pOut, unsigned int outSize) {
 		pDwOut++;
 
 		// write the port then the PID
+		DWORD count = outCapacity;
 		for (DWORD i = 0; i < outCapacity; i++) {
 			DWORD state = info->table[i].dwState;
 			if (state < MIB_TCP_STATE_LISTEN || MIB_TCP_STATE_ESTAB < state) {
-				outCapacity--;
+				count--;
 				continue;
 			}
 
 			DWORD bigEndianPort = info->table[i].dwLocalPort;
 			if (!bigEndianPort) {
-				outCapacity--;
+				count--;
 				continue;
 			}
 
@@ -154,7 +155,7 @@ int GetTcp4Ports(void *pOut, unsigned int outSize) {
 			pDwOut++;
 		}
 
-		*((PDWORD) pOut) = outCapacity;
+		*((PDWORD) pOut) = count;
 	}
 
 	free(pBuf);
@@ -192,16 +193,17 @@ int GetTcp6Ports(void *pOut, unsigned int outSize) {
 		pDwOut++;
 
 		// write the port then the PID
+		DWORD count = outCapacity;
 		for (DWORD i = 0; i < outCapacity; i++) {
 			DWORD state = info->table[i].dwState;
 			if (state < MIB_TCP_STATE_LISTEN || MIB_TCP_STATE_ESTAB < state) {
-				outCapacity--;
+				count--;
 				continue;
 			}
 
 			DWORD bigEndianPort = info->table[i].dwLocalPort;
 			if (!bigEndianPort) {
-				outCapacity--;
+				count--;
 				continue;
 			}
 
@@ -212,7 +214,7 @@ int GetTcp6Ports(void *pOut, unsigned int outSize) {
 			pDwOut++;
 		}
 
-		*((PDWORD) pOut) = outCapacity;
+		*((PDWORD) pOut) = count;
 	}
 
 	free(pBuf);
