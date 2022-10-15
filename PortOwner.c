@@ -17,8 +17,11 @@ int GetUdp4Ports(void *pOut, unsigned int outSize) {
 		return -1;
 	}
 	DWORD outCapacity = (outSize - sizeof(DWORD)) / (sizeof(DWORD) * 2);
-	DWORD bufSize = outCapacity * sizeof(MIB_UDPROW_OWNER_PID) + sizeof(DWORD);
-	char *pBuf = new char[bufSize];
+	DWORD bufSize = outCapacity * sizeof(MIB_UDPROW_OWNER_PID) + sizeof(DWORD) + 8;
+	char *pBuf = (char *) malloc(bufSize);
+	if (!pBuf) {
+		return -1;
+	}
 	DWORD ret;
 
 	// call the blasted method
@@ -49,7 +52,7 @@ int GetUdp4Ports(void *pOut, unsigned int outSize) {
 		}
 	}
 
-	delete[] pBuf;
+	free(pBuf);
 	return ret;
 }
 
@@ -61,8 +64,11 @@ int GetUdp6Ports(void *pOut, unsigned int outSize) {
 		return -1;
 	}
 	DWORD outCapacity = (outSize - sizeof(DWORD)) / (sizeof(DWORD) * 2);
-	DWORD bufSize = outCapacity * sizeof(MIB_UDP6ROW_OWNER_PID) + sizeof(DWORD);
-	char *pBuf = new char[bufSize];
+	DWORD bufSize = outCapacity * sizeof(MIB_UDP6ROW_OWNER_PID) + sizeof(DWORD) + 8;
+	char *pBuf = (char *) malloc(bufSize);
+	if (!pBuf) {
+		return -1;
+	}
 	DWORD ret;
 
 	// call the blasted method
@@ -93,7 +99,7 @@ int GetUdp6Ports(void *pOut, unsigned int outSize) {
 		}
 	}
 
-	delete[] pBuf;
+	free(pBuf);
 	return ret;
 }
 
@@ -105,8 +111,11 @@ int GetTcp4Ports(void *pOut, unsigned int outSize) {
 		return -1;
 	}
 	DWORD outCapacity = (outSize - sizeof(DWORD)) / (sizeof(DWORD) * 2);
-	DWORD bufSize = outCapacity * sizeof(MIB_TCPROW_OWNER_PID) + sizeof(DWORD);
-	char *pBuf = new char[bufSize];
+	DWORD bufSize = outCapacity * sizeof(MIB_TCPROW_OWNER_PID) + sizeof(DWORD) + 8;
+	char *pBuf = (char *) malloc(bufSize);
+	if (!pBuf) {
+		return -1;
+	}
 	DWORD ret;
 
 	// call the blasted method
@@ -144,7 +153,7 @@ int GetTcp4Ports(void *pOut, unsigned int outSize) {
 		*((PDWORD) pOut) = outCapacity;
 	}
 
-	delete[] pBuf;
+	free(pBuf);
 	return ret;
 }
 
@@ -156,8 +165,11 @@ int GetTcp6Ports(void *pOut, unsigned int outSize) {
 		return -1;
 	}
 	DWORD outCapacity = (outSize - sizeof(DWORD)) / (sizeof(DWORD) * 2);
-	DWORD bufSize = outCapacity * sizeof(MIB_TCP6ROW_OWNER_PID) + sizeof(DWORD);
-	char *pBuf = new char[bufSize];
+	DWORD bufSize = outCapacity * sizeof(MIB_TCP6ROW_OWNER_PID) + sizeof(DWORD) + 8;
+	char *pBuf = (char *) malloc(bufSize);
+	if (!pBuf) {
+		return -1;
+	}
 	DWORD ret;
 
 	// call the blasted method
@@ -195,7 +207,7 @@ int GetTcp6Ports(void *pOut, unsigned int outSize) {
 		*((PDWORD) pOut) = outCapacity;
 	}
 
-	delete[] pBuf;
+	free(pBuf);
 	return ret;
 }
 
