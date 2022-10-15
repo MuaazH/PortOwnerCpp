@@ -142,6 +142,10 @@ int GetTcp4Ports(void *pOut, unsigned int outSize) {
 			}
 
 			DWORD bigEndianPort = info->table[i].dwLocalPort;
+			if (!bigEndianPort) {
+				outCapacity--;
+				continue;
+			}
 
 			*pDwOut = (bigEndianPort >> 8) | ((bigEndianPort & 0x00FF) << 8);
 			pDwOut++;
@@ -196,6 +200,10 @@ int GetTcp6Ports(void *pOut, unsigned int outSize) {
 			}
 
 			DWORD bigEndianPort = info->table[i].dwLocalPort;
+			if (!bigEndianPort) {
+				outCapacity--;
+				continue;
+			}
 
 			*pDwOut = (bigEndianPort >> 8) | ((bigEndianPort & 0x00FF) << 8);
 			pDwOut++;
